@@ -260,33 +260,38 @@
       transform: none
     }
 
-    .petal {
-      position: absolute;
-      width: 10px;
-      height: 14px;
-      border-radius: 70% 0 70% 0;
-      background: var(--blush);
-      opacity: .7;
-      animation: fall linear infinite;
-      pointer-events: none
-    }
+    /* Darker falling particles */
+.petal {
+  position: absolute;
+  width: 8px;
+  height: 12px;
+  border-radius: 70% 0 70% 0;
+  background: #8a2a3d;
+  opacity: 0.9;
+  animation: fall linear infinite;
+  pointer-events: none;
+  z-index: 6;
+  box-shadow: 0 0 5px rgba(138, 42, 61, 0.35);
+}
 
-    .gold {
-      background: var(--gold);
-      border-radius: 50%;
-      width: 4px;
-      height: 4px
-    }
+/* Dark gold particles */
+.petal.gold {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #b8924a;
+  opacity: 1;
+  box-shadow: 0 0 7px rgba(184, 146, 74, 0.6);
+}
 
-    @keyframes fall {
-      from {
-        transform: translateY(-10vh) rotate(0)
-      }
-
-      to {
-        transform: translateY(110vh) rotate(360deg)
-      }
-    }
+@keyframes fall {
+  from {
+    transform: translateY(-10vh) rotate(0deg);
+  }
+  to {
+    transform: translateY(110vh) rotate(360deg);
+  }
+}
 
     @keyframes float {
       50% {
@@ -854,6 +859,45 @@ html {
   }
 }
 
+
+/* Strong Bouncing Reveal Button */
+#reveal {
+  animation: revealBounce 0.8s ease-in-out infinite;
+  box-shadow: 0 5px 15px rgba(109, 26, 43, 0.25);
+  transition: background 0.3s ease, box-shadow 0.3s ease;
+}
+
+#reveal:hover {
+  background: var(--wine2);
+  box-shadow: 0 10px 28px rgba(109, 26, 43, 0.4);
+}
+
+#reveal:active {
+  transform: scale(0.92);
+}
+
+@keyframes revealBounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  25% {
+    transform: translateY(-14px);
+  }
+  50% {
+    transform: translateY(0);
+  }
+  75% {
+    transform: translateY(-8px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #reveal {
+    animation: none;
+  }
+}
+
+
   </style>
 </head>
 
@@ -1064,9 +1108,9 @@ html {
   Safiya Begum
 </div>
 
-      <div class="eyebrow reveal" style="font-size:1rem">
+      <!-- <div class="eyebrow reveal" style="font-size:1rem">
         01.11.2026
-      </div>
+      </div> -->
 
       <div class="actions reveal">
         <button class="btn ghost" id="top" type="button">

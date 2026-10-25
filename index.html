@@ -677,52 +677,74 @@
 
     
 /* Elegant animated scroll arrow */
+
+/* Animated scroll arrow */
 .hero-scroll {
-  margin-top: 30px;
+  margin-top: 24px;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
 }
 
 .scroll-arrow {
   width: 48px;
-  height: 58px;
+  height: 48px;
   display: flex;
   align-items: center;
   justify-content: center;
   text-decoration: none;
   cursor: pointer;
-  animation: arrowBounce 1.8s ease-in-out infinite;
+  animation: arrowBounce 1.5s ease-in-out infinite;
 }
 
 .scroll-arrow span {
-  width: 18px;
-  height: 18px;
+  width: 17px;
+  height: 17px;
   border-right: 2px solid var(--gold);
   border-bottom: 2px solid var(--gold);
   transform: rotate(45deg);
-  transition: border-color 0.3s, transform 0.3s;
+  transition: border-color 0.3s;
 }
 
 .scroll-arrow:hover span {
   border-color: var(--wine);
 }
 
+.scroll-hint {
+  margin: 0;
+  color: var(--soft);
+  font-size: 0.7rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  animation: hintFade 2s ease-in-out infinite;
+}
+
 @keyframes arrowBounce {
-  0%, 100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(10px);
-  }
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(8px); }
+}
+
+@keyframes hintFade {
+  0%, 100% { opacity: 0.55; }
+  50% { opacity: 1; }
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 20px;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .scroll-arrow {
+  .scroll-arrow,
+  .scroll-hint {
     animation: none;
   }
+
+  html {
+    scroll-behavior: auto;
+  }
 }
-
-
     @media (prefers-reduced-motion:reduce) {
 
       *,
@@ -798,6 +820,40 @@
         margin: 8mm auto
       }
     }
+
+    
+/* Dark / Light theme toggle */
+#themeToggle {
+  background: var(--card);
+  color: var(--ink);
+  border: 1px solid var(--gold);
+  border-radius: 24px;
+  padding: 9px 14px;
+  min-height: 40px;
+  font: 400 0.8rem Jost, sans-serif;
+  cursor: pointer;
+  transition: background 0.3s, color 0.3s;
+}
+
+#themeToggle:hover {
+  background: var(--wine);
+  color: #fff8ec;
+}
+
+@media (max-width: 480px) {
+  .mini {
+    gap: 0;
+    right: 5px;
+  }
+
+  #themeToggle,
+  #music,
+  #replay {
+    padding: 8px;
+    font-size: 0.7rem;
+  }
+}
+
   </style>
 </head>
 
@@ -807,20 +863,26 @@
   <div id="intro" role="dialog" aria-label="Invitation envelope">
     <div class="stage">
       <div class="env" id="env">
-        <div class="letter"><i>ENGAGEMENT</i><b>Sana & Sajid </b></div>
+        <div class="letter"><b>You are Cordially Invited  </b></div>
         <div class="pocket"></div>
         <div class="flap"></div>
         <button class="seal" id="seal" aria-label="Open your invitation">S & S</button>
       </div>
     </div>
     <div class="cap">
-      <div style="font-size:1.8rem;font-style:italic">You are Cordially Invited</div><small>Tap to Open The
+      <div style="font-size:1.8rem;font-style:italic"></div><small>Tap to Open The
         Invitation</small>
     </div>
   </div>
 
-  <div class="mini"><button id="music" type="button" aria-pressed="false">♪ Music: Off</button><button id="replay"
-      type="button">Replay Invitation</button></div>
+ 
+<div class="mini">
+  <button id="themeToggle" type="button" aria-label="Switch to dark mode">
+    ☾ Dark
+  </button>
+  <button id="music" type="button" aria-pressed="false">♪ Music: Off</button>
+  <button id="replay" type="button">Replay Invitation</button>
+</div>
 
   
 <section id="hero" aria-label="Invitation">
@@ -841,12 +903,12 @@
         With Joy in Our Hearts
       </div>
 
-      <h2 class="serif reveal"
+      <!-- <h2 class="serif reveal"
           style="--d:.6s;font-style:italic;margin-top:14px">
         You Are Cordially Invited
-      </h2>
+      </h2> -->
 
-      <p class="reveal" style="--d:.8s">
+      <p class="reveal" style="--d:.4s">
         To Celebrate the Engagement of
       </p>
 
@@ -865,12 +927,15 @@
 
     </div>
 
-    <div class="hero-scroll">
-      <a href="#story" class="scroll-arrow"
-         aria-label="Scroll to discover the invitation">
-        <span></span>
-      </a>
-    </div>
+    
+<div class="hero-scroll">
+  <a href="#date" class="scroll-arrow"
+     aria-label="Scroll down to discover the invitation">
+    <span></span>
+  </a>
+  <p class="scroll-hint">Scroll to discover more</p>
+</div>
+
 
   </div>
 </section>
@@ -902,6 +967,9 @@
               style="bottom:16%;left:18%">✧</span><span class="spark" style="bottom:12%;right:14%">✦</span>
             <div class="eyebrow dayname">Sunday</div>
             <div class="serif bigdate">01 November 2026</div>
+            <div class="serif" style="font-size:1.4rem;color:var(--gold);margin-top:8px;">
+  11:00 AM
+</div>
             <p class="tag serif" style="font-size:1.1rem;font-style:italic">A day to celebrate love, joy, and
               togetherness.</p>
           </div>
@@ -911,8 +979,8 @@
       <div role="timer" aria-label="Countdown to November 1, 2026">
         <div class="count" id="count"></div>
       </div>
-      <p id="cdnote" style="font-size:.8rem;color:var(--soft)">Counting down to the start of the day (12:00 AM, your
-        local time) — the ceremony time has not been announced.</p>
+      <!-- <p id="cdnote" style="font-size:.8rem;color:var(--soft)">Counting down to the start of the day (12:00 AM, your
+        local time) — the ceremony time has not been announced.</p> -->
       <div class="actions"><a class="btn ghost" id="cal" target="_blank" rel="noopener noreferrer" href="#">Add to
           Calendar</a></div>
     </div>
@@ -940,7 +1008,7 @@
           <div class="eyebrow">The Gathering</div>
           <h3>Lunch Follows</h3>
           <p>Join us for a delightful lunch and share in the happiness of this special occasion.</p>
-          <p id="lunch" style="font-style:italic;margin-top:0"></p>
+          <p id="lunch" style="font-style:italic;margin-top:0">11:00 AM</p>
         </article>
         <article class="tile reveal" style="--d:.3s"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
             stroke-width="1.3" aria-hidden="true">
@@ -956,33 +1024,38 @@
     </div>
   </section>
 
-  <section id="venue">
-    <div class="wrap">
-      <h2 class="reveal">Let’s Celebrate Together</h2>
-      <p class="reveal">Your presence will make our celebration even more special.</p>
-      <div class="frame reveal" style="margin-top:30px;max-width:460px">
-        <div class="serif" id="vname" style="font-size:1.5rem;color:var(--wine)"></div>
-        <p id="vaddr" style="margin:.4em auto"></p>
-        <p>Sunday, November 1, 2026</p>
-        <a class="btn maps" target="_blank" rel="noopener noreferrer">Get Directions</a>
-        <p><a class="link maps" target="_blank" rel="noopener noreferrer">Open in Google Maps</a></p>
-      </div>
-    </div>
-  </section>
+ 
+<section id="venue">
+  <div class="wrap">
+    <h2 class="reveal">Let’s Celebrate Together</h2>
+    <p class="reveal">
+      Your presence will make our celebration even more special.
+    </p>
+  </div>
+</section>
+
 
 
   <section id="closing">
     <div class="wrap">
       <div class="divider reveal">❀ ✦ ❀</div>
 
-      <h2 class="reveal">We Can’t Wait to Celebrate With You</h2>
+      <h2 class="reveal">We Cordially Invite You</h2>
 
-      <p class="reveal">
-        Your presence and blessings will make this special day even more memorable.
-        We look forward to sharing this beautiful beginning with you.
-      </p>
+<p class="reveal">
+  Join us to celebrate the engagement of our beloved daughter.
+  Your presence and blessings mean a lot to us.
+</p>
 
-      <div class="names reveal">Sana &amp; Sajid </div>
+<div class="serif reveal" style="font-size:1.2rem;font-style:italic;">
+  With Best Compliments From
+</div>
+
+<div class="names reveal" style="font-size:2rem;">
+  Rafi Mohammed
+  <br>&amp;<br>
+  Safiya Begum
+</div>
 
       <div class="eyebrow reveal" style="font-size:1rem">
         01.11.2026
@@ -1006,7 +1079,7 @@
       mapsUrl: "https://share.google/i0LlHltDy1kcjzRpq",
       venueName: "",      // e.g. "Grand Palace Hall"  (blank = hidden)
       venueAddress: "",   // full address (blank = hidden)
-      lunchTime: "",      // e.g. "1:00 PM" (blank = "Lunch timing to be confirmed")
+      lunchTime: "11:00 AM",      // e.g. "1:00 PM" (blank = "Lunch timing to be confirmed")
       startTime: "00:00"  // provisional; set e.g. "13:00" and timed:true for a timed calendar event
       , timed: false, durationHours: 3
     };
@@ -1024,9 +1097,9 @@
     // details
     $('#lunch').textContent = EVENT.lunchTime ? `Lunch at ${EVENT.lunchTime}` : 'Lunch timing to be confirmed';
     $$('.maps').forEach(a => a.href = EVENT.mapsUrl);
-    $('#vname').textContent = EVENT.venueName || 'Venue details shared via Google Maps';
-    $('#vaddr').textContent = EVENT.venueAddress || '';
-    $('#vaddr').hidden = !EVENT.venueAddress;
+    // $('#vname').textContent = EVENT.venueName || 'Venue details shared via Google Maps';
+    // $('#vaddr').textContent = EVENT.venueAddress || '';
+    // $('#vaddr').hidden = !EVENT.venueAddress;
     const pad = n => String(n).padStart(2, '0');
     const dt = d => `${d.getFullYear()}${pad(d.getMonth() + 1)}${pad(d.getDate())}T${pad(d.getHours())}${pad(d.getMinutes())}00`;
     let dates = '20261101/20261102';
@@ -1160,6 +1233,14 @@
     }
 
     $('#music').onclick = () => setMusic(!musicOn);
+    
+/* Stop background music when opening Google Maps */
+$$('.maps').forEach(link => {
+  link.addEventListener('click', () => {
+    setMusic(false);
+  });
+});
+
 
 
     function replay() {
@@ -1168,6 +1249,38 @@
     }
     $('#replay').onclick = replay;
     $('#top').onclick = () => { scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' }); setTimeout(replay, reduce ? 0 : 900) };
+
+    
+/* Dark / Light mode toggle */
+const themeToggle = $('#themeToggle');
+const savedTheme = localStorage.getItem('engagement-theme');
+
+if (savedTheme) {
+  document.documentElement.dataset.theme = savedTheme;
+} else {
+  document.documentElement.dataset.theme = 'light';
+}
+
+function updateThemeButton() {
+  const isDark = document.documentElement.dataset.theme === 'dark';
+  themeToggle.textContent = isDark ? '☀ Light' : '☾ Dark';
+  themeToggle.setAttribute(
+    'aria-label',
+    isDark ? 'Switch to light mode' : 'Switch to dark mode'
+  );
+}
+
+updateThemeButton();
+
+themeToggle.addEventListener('click', () => {
+  const isDark = document.documentElement.dataset.theme === 'dark';
+  const newTheme = isDark ? 'light' : 'dark';
+
+  document.documentElement.dataset.theme = newTheme;
+  localStorage.setItem('engagement-theme', newTheme);
+  updateThemeButton();
+});
+
   </script>
   <noscript>
     <style>
@@ -1179,6 +1292,10 @@
         opacity: 1 !important;
         transform: none !important
       }
+
+      
+
+
     </style>
   </noscript>
 </body>
